@@ -115,3 +115,17 @@ for emp in employee:
         highest_name = emp["name"]
 
 print(f"{highest_name} has the highest salary: {highest_salary}")
+
+emp_dep = {}
+
+for emp in employee:
+    dept = emp["department"]
+    name = emp["name"]
+    if dept not in emp_dep:
+        emp_dep[dept] = [name] 
+    else:
+        emp_dep[dept].append(name)
+
+print(emp_dep)
+
+ #   print(dep)

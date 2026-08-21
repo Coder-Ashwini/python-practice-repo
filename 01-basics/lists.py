@@ -169,11 +169,138 @@ print(most_frequent([1,2,3,2,4,2, 3, 8,7,9,0,7,0,3,3,4,4,4,4,4]))
 # Transforming
 # 7. Given a list of numbers, return a new list where each element is the running 
 # total up to that point. E.g., [1,2,3,4] → [1,3,6,10] (1, 1+2, 1+2+3, 1+2+3+4).
+
+def running_total(lst):
+    sum_list = []
+    sum = 0
+    for i in lst:
+        sum = sum + i
+        sum_list.append(sum)
+    return sum_list
+
+print(running_total([1,2,3,2,4,2, 3, 8,7,9,0,7]))
+
+
 # 8. Given a list of mixed positive/negative numbers, separate them into two lists — 
 # positives and negatives — using one loop (not two separate filters).
+
+lst = [1,2,3,2,4,2, -3, 8,7,-9,0,-7,0,3,-3,-4,-4,4,4,4]
+positive = []
+negative = []
+
+for i in lst:
+    if i < 0:
+        negative.append(i)
+    else:
+        positive.append(i)
+
+print(positive)
+print(negative)
+
+
+
 # 9. Flatten a nested list. E.g., [[1,2], [3,4], [5,6]] → [1,2,3,4,5,6]. Try it with a loop first.
 # Challenge — combines everything
+lst = [[1,2], [3,4], [5,6], [7,8,9,10]]
+new_list = []
+
+for i in range(len(lst)):
+    for j in range(len(lst[i])):
+        new_list.append(lst[i][j])
+print(new_list)
+
 # 10. You're given a list of exam scores: scores = [55, 72, 88, 45, 91, 67, 39, 82, 100, 58]. 
-# Without using sorted() or max()/min(): find the highest score, the lowest score, and the average — all in a single loop through the list (track running values as you go, like you did for second-largest).
-# Work through these at your own pace — paste code as you go, in batches if you like, and I'll review. 
-# #6, #9, and #10 are the ones worth spending real time on since they combine multiple things you've learned so far.
+# Without using sorted() or max()/min(): find the highest score, the lowest score, and the average — 
+# all in a single loop through the list (track running values as you go, like you did for second-largest).
+
+def score_stats(scores):
+    lowest = float('inf')
+    highest = float('-inf')
+    total = 0
+    for num in scores:
+        total += num
+        if num > highest:
+            highest = num
+        if num < lowest:
+            lowest = num
+    avg = total / len(scores)
+    return highest, lowest, avg
+
+scores = [55, 72, 88, 45, 91, 67, 39, 82, 100, 58]
+highest, lowest, avg = score_stats(scores)
+print(f"Highest: {highest}, Lowest: {lowest}, Average: {avg}")
+
+
+
+# Two-pointer & pairs
+
+# Given a sorted list nums = [2, 7, 11, 15, 20] and a target = 26, 
+# find a pair of numbers that add up to the target — return their indices. 
+# (This is the classic "Two Sum" problem — try the brute-force way first: check every pair using two nested loops.)
+def two_sum(lst, target):
+    for i in range(len(lst)):
+        for j in range(i+1,len(lst)):
+            if lst[i] + lst[j] == target:
+                return(i,j)
+
+nums = [2, 7, 11, 15, 20]
+print(two_sum(nums, 18))
+
+# Given a list, check if it contains any duplicate values at all — return True/False. 
+# Solve it two ways: 
+# (a) using nested loops comparing every pair, 
+
+def duplicate_check(lst):
+    for i in range(len(lst)):
+        for j in range(i+1,len(lst)):
+            if lst[i] == lst[j]:
+                return True
+    return False
+
+nums = [2, 7, 11, 15, 20,20]
+print(duplicate_check(nums))
+
+# (b) using a set(). Compare how much shorter the set version is.
+
+def duplicate_check_2(lst):
+    length = len(lst)
+    set_length = len(set(lst))
+    if length == set_length:
+        return False
+    else:
+        return True
+    
+nums = [2, 7, 11, 15, 20,20]
+print(duplicate_check_2(nums))
+
+# Sliding/grouping
+# 3. Given nums = [4, 2, 9, 7, 5, 1, 8], find the maximum sum of any 3 consecutive elements. 
+# E.g., for [4,2,9] sum is 15, for [2,9,7] sum is 18, etc. — find the best one. (Hint: loop through starting positions, 
+# slice out 3 elements each time, sum them, track the best.)
+
+def max_sum(lst):
+    sum = 0
+    max_sum = 0
+    for i in range(len(lst)-2):
+        for j in range (i, i+3):
+            sum = sum + lst[j]
+        print(sum)
+        if sum > max_sum:
+            max_sum = sum
+        sum = 0
+    return max_sum
+
+nums = [4, 2, 9, 7, 5, 1, 8]
+print(max_sum(nums))
+
+
+
+# 4. Given a list of numbers, group them into chunks of size n. E.g., chunk_list([1,2,3,4,5,6,7], 3) → [[1,2,3], [4,5,6], [7]].
+
+# Matrix-ish (list of lists)
+# 5. Given a 3x3 matrix as a list of lists, e.g. [[1,2,3],[4,5,6],[7,8,9]], calculate the sum of each row and the sum of each column separately.
+# 6. Transpose the same matrix — swap rows and columns, so [[1,2,3],[4,5,6],[7,8,9]] becomes [[1,4,7],[2,5,8],[3,6,9]].
+
+# Combining what you know
+# 7. Given a list of numbers, remove all duplicates while preserving the original order (this is trickier than it sounds — set() alone won't preserve order, so you can't just use that).
+# 8. Given two lists of equal length, names = ["Alex", "Sam", "Jo"] and scores = [85, 92, 76], combine them into a list of dicts: [{"name": "Alex", "score": 85}, ...]. (Hint: look up the zip() function — new to you, but very useful for looping over two lists together.)

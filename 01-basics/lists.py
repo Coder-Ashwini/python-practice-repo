@@ -295,12 +295,86 @@ print(max_sum(nums))
 
 
 
-# 4. Given a list of numbers, group them into chunks of size n. E.g., chunk_list([1,2,3,4,5,6,7], 3) → [[1,2,3], [4,5,6], [7]].
+# 4. Given a list of numbers, group them into chunks of size n. 
+# E.g., chunk_list([1,2,3,4,5,6,7], 3) → [[1,2,3], [4,5,6], [7]].
 
 # Matrix-ish (list of lists)
-# 5. Given a 3x3 matrix as a list of lists, e.g. [[1,2,3],[4,5,6],[7,8,9]], calculate the sum of each row and the sum of each column separately.
+def chunk_list(lst, window):
+    new_lst = []
+    for i in range(0,len(lst),window):
+        group = lst[i:i+window]
+        new_lst.append(group)
+    return(new_lst)
+
+
+print(chunk_list([1,2,3,4,5,6,7], 4))
+
+
+# 5. Given a 3x3 matrix as a list of lists, e.g. [[1,2,3],[4,5,6],[7,8,9]], 
+# calculate the sum of each row and the sum of each column separately.
+#  [1,2,3]
+#  [4,5,6]
+#  [7,8,9]
+
+def matrix_sum(lst):
+    row_sums = []
+    column_sums = []
+    for i in range (3):
+        row_total = sum(lst[i])
+        row_sums.append(row_total)
+    for j in range(3):
+        col_total = 0
+        for i in range(len(lst)):       # walk down every row
+            col_total += lst[i][j]
+        column_sums.append(col_total)
+    return row_sums, column_sums
+            
+
+lst = [[1,2,3],[4,5,6],[7,8,9]]
+row_sums, col_sums = matrix_sum(lst)
+print(f"row_sums = {row_sums}")
+print(f"col_sums = {col_sums}")
+#print("Row nums : " + result)
+
 # 6. Transpose the same matrix — swap rows and columns, so [[1,2,3],[4,5,6],[7,8,9]] becomes [[1,4,7],[2,5,8],[3,6,9]].
+def transpose_mat(lst):
+    new_matrix = []
+    j_len = len(lst[0])
+    for i in range(len(lst)):
+         new_row = []
+         for j in range(j_len):
+             new_row.append(lst[j][i])
+         new_matrix.append(new_row)
+    return new_matrix
+
+lst = [[1,2,3],[4,5,6],[7,8,9]]
+print(transpose_mat(lst))
 
 # Combining what you know
 # 7. Given a list of numbers, remove all duplicates while preserving the original order (this is trickier than it sounds — set() alone won't preserve order, so you can't just use that).
-# 8. Given two lists of equal length, names = ["Alex", "Sam", "Jo"] and scores = [85, 92, 76], combine them into a list of dicts: [{"name": "Alex", "score": 85}, ...]. (Hint: look up the zip() function — new to you, but very useful for looping over two lists together.)
+def remove_dups(lst):
+    new_lst = []
+    for num in lst:
+        if num in new_lst:
+            pass
+        else:
+            new_lst.append(num)
+    return(new_lst)
+lst = [4, 2, 9, 7, 7, 5, 1, 8,8]
+print(remove_dups(lst))
+# 8. Given two lists of equal length, names = ["Alex", "Sam", "Jo"] and scores = [85, 92, 76], combine them into a list of dicts: [{"name": "Alex", "score": 85}, ...]. 
+# (Hint: look up the zip() function — new to you, but very useful for looping over two lists together.)
+
+
+
+def combine(names, scores):
+    result = []
+    for name, score in zip(names, scores):
+        result.append({"name": name , "score" : score})
+    return result
+
+names = ["Alex", "Sam", "Jo"]
+scores = [85, 92, 76]
+print(combine(names,scores))
+
+# zip function

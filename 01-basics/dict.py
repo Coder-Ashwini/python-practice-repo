@@ -129,3 +129,84 @@ for emp in employee:
 print(emp_dep)
 
  #   print(dep)
+
+#  Given {"Alex": 85, "Sam": 92, "Jo": 76}, find the student with the highest score without using max() — loop over .items() and track the best as you go.
+def highest_score(dict):
+    best_name = None
+    best_score = float('-inf')
+    for value in dict.values():
+        if value > best_score:
+            best_score = value
+            best_name = name
+    return best_name,best_score
+
+
+dict = {"Alex": 85, "Sam": 92, "Jo": 76}
+print(highest_score(dict))
+
+# Merge d1 = {"a": 10, "b": 20} and d2 = {"b": 5, "c": 30} — if a key exists in both, add the values ("b" → 25).
+def merge_dict(d1, d2):
+    for key in d2:
+        if key in d1:
+            d1[key] = (d1[key] + d2[key])
+        else:
+            d1[key] = d2[key]
+    return d1
+
+d1 = {"a": 10, "b": 20} 
+d2 = {"b": 5, "c": 30, "d" :40} 
+print(merge_dict(d1,d2))
+
+# Given ["cat", "elephant", "dog"], build {"cat": 3, "elephant": 8, "dog": 3} — word to its length.
+def word_len(lst):
+    result = {}
+    for word in lst:
+        result[word] = len(word)
+    return result
+
+lst = ["cat", "elephant", "dog"]
+print(word_len(lst))
+
+# Invert {"a": 1, "b": 2} → {1: "a", 2: "b"}. 
+def invert_dict(dict):
+    result_dict = {}
+    for key, value in dict.items():
+        result_dict[value] = key
+    return result_dict
+
+dict = {"a": 1, "b": 2, "c" : 1}
+
+print(invert_dict(dict))
+
+# Think first: what happens with duplicate values?: The previous value will get replaced by the later value.
+
+# Given a dict of dicts (nested), like:
+# python
+# employees = {
+#     "e1": {"name": "Alex", "age": 30},
+#     "e2": {"name": "Sam", "age": 25}
+# }
+# Loop through and print each employee's name and age on one line, e.g. "Alex is 30 years old".
+
+def nested_dict(employees):
+    for emp_id, details in employees.items():
+        print(f"{details['name']} is {details['age']} years old")
+
+employees = {
+    "e1": {"name": "Alex", "age": 30},
+    "e2": {"name": "Sam", "age": 25}
+}
+nested_dict(employees)
+
+# Write a function safe_get(d, key) that returns the value for key if it exists, or "Not Found" if it doesn't — without using .get() 
+#     (use in and if/else instead, 
+#     to make sure you understand what .get() is doing under the hood).
+
+def safe_get(d, key):
+    if key in d:
+        return d[key]
+    else:
+        return "Not Found"
+
+d = {"b": 5, "c": 30, "d" :40} 
+print(safe_get(d, 'c'))

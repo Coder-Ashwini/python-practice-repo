@@ -210,3 +210,65 @@ def safe_get(d, key):
 
 d = {"b": 5, "c": 30, "d" :40} 
 print(safe_get(d, 'c'))
+
+# Grouping & aggregating (the DE bread and butter)
+# Given a list of transaction dicts:
+# python
+# transactions = [
+#     {"user": "Alex", "amount": 100, "category": "food"},
+#     {"user": "Sam", "amount": 50, "category": "travel"},
+#     {"user": "Alex", "amount": 200, "category": "travel"},
+#     {"user": "Sam", "amount": 75, "category": "food"},
+#     {"user": "Alex", "amount": 30, "category": "food"},
+# ]
+# Calculate total spend per user → {"Alex": 330, "Sam": 125}.
+
+
+transactions = [
+    {"user": "Alex", "amount": 100, "category": "food"},
+    {"user": "Sam", "amount": 50, "category": "travel"},
+    {"user": "Alex", "amount": 200, "category": "travel"},
+    {"user": "Sam", "amount": 75, "category": "food"},
+    {"user": "Alex", "amount": 30, "category": "food"},
+]
+
+result = {}
+
+for spend in transactions:
+    name = spend['user']  
+    # print(spend['amount'])
+    if name in result:
+        result[name] = result[name] + spend['amount']
+    else:
+        result[name] = spend['amount']
+print(result)
+
+# From the same data, calculate total spend per category → {"food": 205, "travel": 250}.
+
+result2 = {}
+for spend in transactions:
+    item = spend['category']
+    if item in result2:
+        result2[item] = result2[item] + spend['amount']
+    else:
+        result2[item] = spend['amount']
+
+print(result2)
+
+# Two-level grouping: total spend per user, broken down by 
+# category → {"Alex": {"food": 130, "travel": 200}, "Sam": {"travel": 50, "food": 75}}. 
+# (Hint: you'll need a dict-of-dicts, and .setdefault() becomes genuinely useful here — or nested if key not in d.)
+
+
+
+
+
+# Comparing & combining dicts
+# 4. Given inventory = {"apples": 50, "bananas": 30, "oranges": 20} and sold = {"apples": 15, "bananas": 40, "grapes": 5}, calculate remaining stock after sales. What should happen for "grapes" (sold but never in inventory) and "oranges" (in inventory but never sold)? Decide and handle both cases.
+# Given two dicts representing sets of skills, dev1 = {"python": 3, "sql": 2} and dev2 = {"python": 5, "java": 4}, find the skills common to both, and for common skills, keep the higher experience value.
+# Sorting dicts (new territory)
+# 6. Given scores = {"Alex": 85, "Sam": 92, "Jo": 76, "Mira": 92}, print students sorted by score, highest first. (Hint: look up sorted() with a key= argument — new concept, ask if you want it explained before trying.)
+# From the same scores dict, return the top 2 students as a list of (name, score) tuples.
+# Challenge — combines everything
+# 8. Given the transactions list from #1, find the user who spent the most overall, and also return which category was their biggest spend within that. E.g. output might be ("Alex", 330, "travel") — Alex spent the most overall, and travel was his biggest single category.
+# Try these in batches — #3 and #8 are the meaty ones. Let me know if sorted(..., key=...) in #6 needs an explainer before you dive in, or if you want to try it cold first.
